@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: conectionpostgres
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev_senior_db
+    username: admin
+    password: admin
