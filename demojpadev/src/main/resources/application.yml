@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Jpa-DevSenior-Application
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev_senior_db
+    username: ${USER_NAME:admin}
+    password: ${PASSWORD:admin}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
