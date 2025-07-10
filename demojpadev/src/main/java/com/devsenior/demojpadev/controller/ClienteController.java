@@ -2,6 +2,7 @@ package com.devsenior.demojpadev.controller;
 
 import com.devsenior.demojpadev.data.ClienteRepository;
 import com.devsenior.demojpadev.data.model.Cliente;
+import com.devsenior.demojpadev.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping
     public List<Cliente> getAll(){
         return clienteRepository.findAll();
@@ -22,6 +26,11 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Cliente getById(@PathVariable Long id){
         return clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + id));
+    }
+
+    @GetMapping("/busqueda")
+    public List<Cliente> getAllWithCriteria(@RequestParam(required = false) String nombre, @RequestParam(required = false) String email){
+       return clienteService.buscarClientesPorCriterios(nombre, email);
     }
 
     @PostMapping
