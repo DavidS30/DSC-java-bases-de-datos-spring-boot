@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,6 +53,27 @@ public class PedidoController {
         return pedidoService.obtenerPedidosPaginadosAttr(pageable).map(PedidoDTO::new);
     }
 
+    @GetMapping("buscar")
+    public Page<PedidoDTO> buscarPedidosAvanzados(
+            @RequestParam(required = false) String clienteNombre,
+            @RequestParam(required = false) Double totalMinimo,
+            @RequestParam(required = false) Double totalMaximo,
+            @RequestParam(required = false) LocalDate fechaInicio,
+            @RequestParam(required = false) LocalDate fechaFin,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+    ){
+
+        return pedidoService.buscarPedidosAvanzado(clienteNombre,
+                                                   fechaInicio,
+                                                   fechaFin,
+                                                   totalMinimo,
+                                                   totalMaximo,
+                                                   page,
+                                                   size).map(PedidoDTO::new);
+    }
+
+    // POST Y DELETE
     @PostMapping
     public ResponsePedido create(@RequestBody PedidoRequest pedidoRequest) {
         try{
